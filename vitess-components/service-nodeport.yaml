@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-vtgate-nodeport
+  namespace: vitess
+spec:
+  type: NodePort
+  selector:
+    planetscale.com/cluster: example
+    planetscale.com/component: vtadmin
+  ports:
+    - name: mysql
+      protocol: TCP
+      port: 3306
+      targetPort: 3306
+      nodePort: 30306           # Port externe pour MySQL 
+    - name: grpc
+      protocol: TCP
+      port: 15999
+      targetPort: 15999
+      nodePort: 30050           # Port externe pour gRPC 
+    - name: web
+      protocol: TCP
+      port: 15000
+      targetPort: 15000
+      nodePort: 30060     # Port externe pour web 
